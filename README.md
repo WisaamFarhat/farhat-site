@@ -30,3 +30,22 @@ Create a free account at buttondown.email, then paste each biweekly digest as an
 2. Add its publication date to `PUB_DATES` in `generate.py`.
 3. `python3 generate.py` — regenerates all pages + sitemap.
 4. Review locally (`python3 -m http.server`), then commit & push.
+
+## Paid consultation calls (Calendly + Stripe)
+
+The /services/ page offers a paid consultation call. Booking and payment are handled
+entirely by Calendly with its native Stripe integration, so the static site needs no server.
+
+Setup (about 15 minutes):
+1. Create a Calendly account and an event type, e.g. "Spectrum consultation, 60 minutes".
+   Collecting payments requires a paid Calendly plan (Standard or above).
+2. In the event type, open "Payments" (or "Collect payments"), choose Stripe, and connect
+   your Stripe account. Set the price there, matching CONSULT_PRICE in the generator.
+3. Copy the event link (like https://calendly.com/yourname/consultation) into
+   CALENDLY_URL in _generator/generate.py, adjust CONSULT_PRICE and CONSULT_LENGTH,
+   then run generate.py and push.
+4. The "Book and pay online" button opens the Calendly popup on the page. Stripe charges
+   the client at the moment they confirm the slot; payouts land in your Stripe account.
+
+Also set the proposal email: the "Request a proposal" button uses
+consult@farhatregulatory.com; change the mailto in the generator if you prefer another address.
