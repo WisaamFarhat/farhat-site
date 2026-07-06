@@ -139,3 +139,4 @@ footer .colophon{grid-column:1/-1;border-top:1px solid #2A2418;padding-top:22px;
 /* inline metadata separator (replaces middots) */
 .sep{display:inline-block;width:1px;height:.8em;background:var(--line);margin:0 12px;vertical-align:middle;opacity:.75}
 .issue .meta .sep{background:var(--line)}
+.deadline-chip.past{background:rgba(138,122,96,.10);border-color:#5A5142;color:#9C8E76}

@@ -49,3 +49,16 @@ Setup (about 15 minutes):
 
 Also set the proposal email: the "Request a proposal" button uses
 consult@farhatregulatory.com; change the mailto in the generator if you prefer another address.
+
+## Adding a section to the IFIC digest pages
+
+The digest page is composed from a list of section functions in _generator/generate.py.
+Each section is a small function (num, d, ctx) that returns an HTML string, or an empty
+string to skip itself. `d` is the IFIC's data from ific_data.json (filings, fleets,
+top_adms, provmix, and per filing: bands, freq_span, fmin_mhz, fmax_mhz, reach).
+`ctx` carries pub, pubfmt, dlfmt, days, and the composed summary.
+
+To add a section: write a function like sec_spectrum, then insert it at the position
+you want in the IFIC_SECTIONS list. Run generate.py and every IFIC page gets it.
+Current order: summary, stats, service CTA, spectrum, filings table, fleets,
+administrations, subscribe, prev/next.
