@@ -1,0 +1,909 @@
+{
+  "3065": {
+    "ific_no": "3065",
+    "total_filings": 5,
+    "gso": 3,
+    "ngso": 2,
+    "provmix": {
+      "9.12": 16,
+      "9.12A": 21,
+      "9.13": 85
+    },
+    "top_adms": [
+      [
+        "CHN",
+        2
+      ],
+      [
+        "IND",
+        1
+      ],
+      [
+        "EGY",
+        1
+      ],
+      [
+        "GRC",
+        1
+      ]
+    ],
+    "filings": [
+      {
+        "ntc": "124520207",
+        "crc": "124520207",
+        "satellite": "TIBASAT-G2-40.5E",
+        "adm": "EGY",
+        "type": "GSO",
+        "position": "40.5\u00b0E",
+        "provisions": {
+          "9.13": 48
+        },
+        "reach": 48,
+        "bands": [
+          "L",
+          "S",
+          "Ku",
+          "Ka",
+          "Q/V"
+        ],
+        "freq_span": "1.164 GHz to 76 GHz",
+        "fmin_mhz": 1164.0,
+        "fmax_mhz": 76000.0,
+        "areas": [],
+        "d_rcv": "10/21/24"
+      },
+      {
+        "ntc": "124520208",
+        "crc": "124520208",
+        "satellite": "ASIASAT-100.5N",
+        "adm": "CHN",
+        "type": "GSO",
+        "position": "100.5\u00b0E",
+        "provisions": {
+          "9.13": 37
+        },
+        "reach": 37,
+        "bands": [
+          "C",
+          "X",
+          "Ku",
+          "Ka",
+          "Q/V"
+        ],
+        "freq_span": "5 GHz to 76 GHz",
+        "fmin_mhz": 5000.0,
+        "fmax_mhz": 76000.0,
+        "areas": [],
+        "d_rcv": "10/23/24"
+      },
+      {
+        "ntc": "124520202",
+        "crc": "124520202",
+        "satellite": "INSAT-NAV-MEO",
+        "adm": "IND",
+        "type": "NGSO",
+        "position": "",
+        "provisions": {
+          "9.12": 14,
+          "9.12A": 21
+        },
+        "reach": 35,
+        "bands": [
+          "L",
+          "S",
+          "C"
+        ],
+        "freq_span": "1.164 GHz to 5.03 GHz",
+        "fmin_mhz": 1164.45,
+        "fmax_mhz": 5030.0,
+        "areas": [],
+        "d_rcv": "10/10/24"
+      },
+      {
+        "ntc": "124520201",
+        "crc": "124520201",
+        "satellite": "TIANQI-3E",
+        "adm": "CHN",
+        "type": "NGSO",
+        "position": "",
+        "provisions": {
+          "9.12": 2
+        },
+        "reach": 2,
+        "bands": [
+          "UHF",
+          "S"
+        ],
+        "freq_span": "335.4 MHz to 2.69 GHz",
+        "fmin_mhz": 335.4,
+        "fmax_mhz": 2690.0,
+        "areas": [],
+        "d_rcv": "10/10/24"
+      },
+      {
+        "ntc": "124520216",
+        "crc": "124520216",
+        "satellite": "ICARUS-GRC",
+        "adm": "GRC",
+        "type": "GSO",
+        "position": "39.1\u00b0E",
+        "provisions": {},
+        "reach": 0,
+        "bands": [
+          "C",
+          "X"
+        ],
+        "freq_span": "7.25 GHz to 8.025 GHz",
+        "fmin_mhz": 7250.0,
+        "fmax_mhz": 8025.0,
+        "areas": [],
+        "d_rcv": "11/22/24"
+      }
+    ],
+    "fleets": []
+  },
+  "3066": {
+    "ific_no": "3066",
+    "total_filings": 14,
+    "gso": 12,
+    "ngso": 2,
+    "provmix": {
+      "9.13": 456,
+      "9.12": 36
+    },
+    "top_adms": [
+      [
+        "LUX",
+        5
+      ],
+      [
+        "G",
+        2
+      ],
+      [
+        "UAE",
+        2
+      ],
+      [
+        "E",
+        2
+      ],
+      [
+        "CHN",
+        1
+      ],
+      [
+        "BUL",
+        1
+      ],
+      [
+        "I",
+        1
+      ]
+    ],
+    "filings": [
+      {
+        "ntc": "124520225",
+        "crc": "124520225",
+        "satellite": "LUX-73E",
+        "adm": "LUX",
+        "type": "GSO",
+        "position": "73.0\u00b0E",
+        "provisions": {
+          "9.13": 41
+        },
+        "reach": 41,
+        "bands": [
+          "VHF",
+          "UHF",
+          "L",
+          "S",
+          "C",
+          "X",
+          "Ku",
+          "Ka"
+        ],
+        "freq_span": "235 MHz to 29.5 GHz",
+        "fmin_mhz": 235.0,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/09/24"
+      },
+      {
+        "ntc": "124520231",
+        "crc": "124520231",
+        "satellite": "MADAR-118.7W",
+        "adm": "UAE",
+        "type": "GSO",
+        "position": "118.7\u00b0W",
+        "provisions": {
+          "9.13": 41
+        },
+        "reach": 41,
+        "bands": [
+          "L",
+          "S",
+          "X",
+          "Ku",
+          "Ka",
+          "Q/V"
+        ],
+        "freq_span": "1.518 GHz to 76 GHz",
+        "fmin_mhz": 1518.0,
+        "fmax_mhz": 76000.0,
+        "areas": [],
+        "d_rcv": "12/13/24"
+      },
+      {
+        "ntc": "124520232",
+        "crc": "124520232",
+        "satellite": "MADAR-106E",
+        "adm": "UAE",
+        "type": "GSO",
+        "position": "106.0\u00b0E",
+        "provisions": {
+          "9.13": 41
+        },
+        "reach": 41,
+        "bands": [
+          "L",
+          "S",
+          "Ku",
+          "Ka",
+          "Q/V"
+        ],
+        "freq_span": "1.518 GHz to 76 GHz",
+        "fmin_mhz": 1518.0,
+        "fmax_mhz": 76000.0,
+        "areas": [],
+        "d_rcv": "12/13/24"
+      },
+      {
+        "ntc": "124520223",
+        "crc": "124520223",
+        "satellite": "LUX-G17-38",
+        "adm": "LUX",
+        "type": "GSO",
+        "position": "131.0\u00b0W",
+        "provisions": {
+          "9.13": 39
+        },
+        "reach": 39,
+        "bands": [
+          "VHF",
+          "UHF",
+          "L",
+          "S",
+          "C",
+          "X",
+          "Ku",
+          "Ka"
+        ],
+        "freq_span": "235 MHz to 29.5 GHz",
+        "fmin_mhz": 235.0,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/09/24"
+      },
+      {
+        "ntc": "124520224",
+        "crc": "124520224",
+        "satellite": "LUX-G17-51",
+        "adm": "LUX",
+        "type": "GSO",
+        "position": "40.5\u00b0W",
+        "provisions": {
+          "9.13": 39
+        },
+        "reach": 39,
+        "bands": [
+          "VHF",
+          "UHF",
+          "L",
+          "S",
+          "C",
+          "X",
+          "Ku",
+          "Ka"
+        ],
+        "freq_span": "235 MHz to 29.5 GHz",
+        "fmin_mhz": 235.0,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/09/24"
+      },
+      {
+        "ntc": "124520226",
+        "crc": "124520226",
+        "satellite": "LUX-G16-5",
+        "adm": "LUX",
+        "type": "GSO",
+        "position": "19.2\u00b0E",
+        "provisions": {
+          "9.13": 39
+        },
+        "reach": 39,
+        "bands": [
+          "VHF",
+          "UHF",
+          "L",
+          "S",
+          "C",
+          "X",
+          "Ku",
+          "Ka"
+        ],
+        "freq_span": "235 MHz to 29.5 GHz",
+        "fmin_mhz": 235.0,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/10/24"
+      },
+      {
+        "ntc": "124520227",
+        "crc": "124520227",
+        "satellite": "LUX-G16-8",
+        "adm": "LUX",
+        "type": "GSO",
+        "position": "28.2\u00b0E",
+        "provisions": {
+          "9.13": 39
+        },
+        "reach": 39,
+        "bands": [
+          "VHF",
+          "UHF",
+          "L",
+          "S",
+          "C",
+          "X",
+          "Ku",
+          "Ka"
+        ],
+        "freq_span": "235 MHz to 29.5 GHz",
+        "fmin_mhz": 235.0,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/10/24"
+      },
+      {
+        "ntc": "124520235",
+        "crc": "124520235",
+        "satellite": "HISPASAT-4-61W",
+        "adm": "E",
+        "type": "GSO",
+        "position": "61.0\u00b0W",
+        "provisions": {
+          "9.13": 37
+        },
+        "reach": 37,
+        "bands": [
+          "C",
+          "X",
+          "Ku",
+          "Ka"
+        ],
+        "freq_span": "5 GHz to 29.5 GHz",
+        "fmin_mhz": 5000.0,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/17/24"
+      },
+      {
+        "ntc": "124520229",
+        "crc": "124520229",
+        "satellite": "ARRAKIS-7",
+        "adm": "G",
+        "type": "GSO",
+        "position": "72.5\u00b0W",
+        "provisions": {
+          "9.13": 35
+        },
+        "reach": 35,
+        "bands": [
+          "X",
+          "Ku",
+          "Ka"
+        ],
+        "freq_span": "11.7 GHz to 30 GHz",
+        "fmin_mhz": 11700.0,
+        "fmax_mhz": 30000.0,
+        "areas": [],
+        "d_rcv": "12/12/24"
+      },
+      {
+        "ntc": "124520230",
+        "crc": "124520230",
+        "satellite": "ARRAKIS-8",
+        "adm": "G",
+        "type": "GSO",
+        "position": "148.0\u00b0E",
+        "provisions": {
+          "9.13": 35
+        },
+        "reach": 35,
+        "bands": [
+          "X",
+          "Ku",
+          "Ka"
+        ],
+        "freq_span": "11.7 GHz to 30 GHz",
+        "fmin_mhz": 11700.0,
+        "fmax_mhz": 30000.0,
+        "areas": [],
+        "d_rcv": "12/12/24"
+      },
+      {
+        "ntc": "124520241",
+        "crc": "124520241",
+        "satellite": "BUL-KA-1.9E",
+        "adm": "BUL",
+        "type": "GSO",
+        "position": "1.9\u00b0E",
+        "provisions": {
+          "9.13": 35
+        },
+        "reach": 35,
+        "bands": [
+          "Ka"
+        ],
+        "freq_span": "18.6 GHz to 29.5 GHz",
+        "fmin_mhz": 18600.0,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/19/24"
+      },
+      {
+        "ntc": "124520249",
+        "crc": "124520249",
+        "satellite": "ITASAT-1E",
+        "adm": "I",
+        "type": "GSO",
+        "position": "32.2\u00b0E",
+        "provisions": {
+          "9.13": 35
+        },
+        "reach": 35,
+        "bands": [
+          "VHF",
+          "UHF",
+          "C",
+          "X",
+          "Ka"
+        ],
+        "freq_span": "240 MHz to 30 GHz",
+        "fmin_mhz": 240.0,
+        "fmax_mhz": 30000.0,
+        "areas": [],
+        "d_rcv": "12/19/24"
+      },
+      {
+        "ntc": "124520240",
+        "crc": "124520240",
+        "satellite": "6GSTARLAB_CRC",
+        "adm": "E",
+        "type": "NGSO",
+        "position": "",
+        "provisions": {
+          "9.12": 34
+        },
+        "reach": 34,
+        "bands": [
+          "L",
+          "S",
+          "Ka"
+        ],
+        "freq_span": "1.98 GHz to 30 GHz",
+        "fmin_mhz": 1980.5,
+        "fmax_mhz": 29995.0,
+        "areas": [],
+        "d_rcv": "12/19/24"
+      },
+      {
+        "ntc": "124520239",
+        "crc": "124520239",
+        "satellite": "TIANQI-3E-2",
+        "adm": "CHN",
+        "type": "NGSO",
+        "position": "",
+        "provisions": {
+          "9.12": 2
+        },
+        "reach": 2,
+        "bands": [
+          "S",
+          "C"
+        ],
+        "freq_span": "2.01 GHz to 5.25 GHz",
+        "fmin_mhz": 2010.0,
+        "fmax_mhz": 5250.0,
+        "areas": [],
+        "d_rcv": "12/18/24"
+      }
+    ],
+    "fleets": [
+      {
+        "adm": "LUX",
+        "family": "LUX",
+        "count": 5,
+        "sats": [
+          "LUX-73E",
+          "LUX-G16-5",
+          "LUX-G16-8",
+          "LUX-G17-38",
+          "LUX-G17-51"
+        ]
+      },
+      {
+        "adm": "G",
+        "family": "ARRAKIS",
+        "count": 2,
+        "sats": [
+          "ARRAKIS-7",
+          "ARRAKIS-8"
+        ]
+      },
+      {
+        "adm": "UAE",
+        "family": "MADAR",
+        "count": 2,
+        "sats": [
+          "MADAR-106E",
+          "MADAR-118.7W"
+        ]
+      }
+    ]
+  },
+  "3067": {
+    "ific_no": "3067",
+    "total_filings": 14,
+    "gso": 11,
+    "ngso": 3,
+    "provmix": {
+      "9.12": 3,
+      "9.13": 402
+    },
+    "top_adms": [
+      [
+        "G",
+        8
+      ],
+      [
+        "OMA",
+        2
+      ],
+      [
+        "UAE",
+        1
+      ],
+      [
+        "D",
+        1
+      ],
+      [
+        "POR",
+        1
+      ],
+      [
+        "I",
+        1
+      ]
+    ],
+    "filings": [
+      {
+        "ntc": "124520254",
+        "crc": "124520254",
+        "satellite": "OMANSAT-72E-1",
+        "adm": "OMA",
+        "type": "GSO",
+        "position": "72.0\u00b0E",
+        "provisions": {
+          "9.13": 48
+        },
+        "reach": 48,
+        "bands": [
+          "L",
+          "S",
+          "Ku",
+          "Ka",
+          "Q/V"
+        ],
+        "freq_span": "1.164 GHz to 76 GHz",
+        "fmin_mhz": 1164.0,
+        "fmax_mhz": 76000.0,
+        "areas": [],
+        "d_rcv": "12/23/24"
+      },
+      {
+        "ntc": "124520253",
+        "crc": "124520253",
+        "satellite": "OMANSAT-54.5E-1",
+        "adm": "OMA",
+        "type": "GSO",
+        "position": "54.5\u00b0E",
+        "provisions": {
+          "9.13": 47
+        },
+        "reach": 47,
+        "bands": [
+          "L",
+          "S",
+          "X",
+          "Ku",
+          "Ka",
+          "Q/V"
+        ],
+        "freq_span": "1.164 GHz to 76 GHz",
+        "fmin_mhz": 1164.0,
+        "fmax_mhz": 76000.0,
+        "areas": [],
+        "d_rcv": "12/23/24"
+      },
+      {
+        "ntc": "124520247",
+        "crc": "124520247",
+        "satellite": "INMARSAT-8-28W",
+        "adm": "G",
+        "type": "GSO",
+        "position": "28.0\u00b0W",
+        "provisions": {
+          "9.13": 46
+        },
+        "reach": 46,
+        "bands": [
+          "L",
+          "Ka"
+        ],
+        "freq_span": "1.164 GHz to 29.5 GHz",
+        "fmin_mhz": 1164.45,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/19/24"
+      },
+      {
+        "ntc": "124520248",
+        "crc": "124520248",
+        "satellite": "INMARSAT-8-64E",
+        "adm": "G",
+        "type": "GSO",
+        "position": "64.0\u00b0E",
+        "provisions": {
+          "9.13": 46
+        },
+        "reach": 46,
+        "bands": [
+          "L",
+          "Ka"
+        ],
+        "freq_span": "1.164 GHz to 29.5 GHz",
+        "fmin_mhz": 1164.45,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/19/24"
+      },
+      {
+        "ntc": "124520233",
+        "crc": "124520233",
+        "satellite": "MADAR-89.5E",
+        "adm": "UAE",
+        "type": "GSO",
+        "position": "89.5\u00b0E",
+        "provisions": {
+          "9.13": 41
+        },
+        "reach": 41,
+        "bands": [
+          "L",
+          "S",
+          "Ku",
+          "Ka",
+          "Q/V"
+        ],
+        "freq_span": "1.518 GHz to 76 GHz",
+        "fmin_mhz": 1518.0,
+        "fmax_mhz": 76000.0,
+        "areas": [],
+        "d_rcv": "12/13/24"
+      },
+      {
+        "ntc": "124520242",
+        "crc": "124520242",
+        "satellite": "INMARSAT-8A-79W",
+        "adm": "G",
+        "type": "GSO",
+        "position": "79.0\u00b0W",
+        "provisions": {
+          "9.13": 35
+        },
+        "reach": 35,
+        "bands": [
+          "Ka"
+        ],
+        "freq_span": "18.7 GHz to 29.5 GHz",
+        "fmin_mhz": 18700.0,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/19/24"
+      },
+      {
+        "ntc": "124520243",
+        "crc": "124520243",
+        "satellite": "INMARSAT-8A-70W",
+        "adm": "G",
+        "type": "GSO",
+        "position": "70.0\u00b0W",
+        "provisions": {
+          "9.13": 35
+        },
+        "reach": 35,
+        "bands": [
+          "Ka"
+        ],
+        "freq_span": "18.7 GHz to 29.5 GHz",
+        "fmin_mhz": 18700.0,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/19/24"
+      },
+      {
+        "ntc": "124520245",
+        "crc": "124520245",
+        "satellite": "INMARSAT-8-117E5",
+        "adm": "G",
+        "type": "GSO",
+        "position": "117.5\u00b0E",
+        "provisions": {
+          "9.13": 35
+        },
+        "reach": 35,
+        "bands": [
+          "Ka"
+        ],
+        "freq_span": "18.8 GHz to 29.5 GHz",
+        "fmin_mhz": 18800.0,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/19/24"
+      },
+      {
+        "ntc": "124520246",
+        "crc": "124520246",
+        "satellite": "INMARSAT-8-123W1-R",
+        "adm": "G",
+        "type": "GSO",
+        "position": "123.1\u00b0W",
+        "provisions": {
+          "9.13": 35
+        },
+        "reach": 35,
+        "bands": [
+          "Ka"
+        ],
+        "freq_span": "18.8 GHz to 29.5 GHz",
+        "fmin_mhz": 18800.0,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/19/24"
+      },
+      {
+        "ntc": "124520244",
+        "crc": "124520244",
+        "satellite": "INMARSAT-8A-160E",
+        "adm": "G",
+        "type": "GSO",
+        "position": "160.0\u00b0E",
+        "provisions": {
+          "9.13": 34
+        },
+        "reach": 34,
+        "bands": [
+          "Ka"
+        ],
+        "freq_span": "18.7 GHz to 29.5 GHz",
+        "fmin_mhz": 18700.0,
+        "fmax_mhz": 29500.0,
+        "areas": [],
+        "d_rcv": "12/19/24"
+      },
+      {
+        "ntc": "116520381",
+        "crc": "116520381",
+        "satellite": "SSG-CSL",
+        "adm": "G",
+        "type": "NGSO",
+        "position": "",
+        "provisions": {
+          "9.12": 3
+        },
+        "reach": 3,
+        "bands": [
+          "S"
+        ],
+        "freq_span": "2.483 GHz to 2.5 GHz",
+        "fmin_mhz": 2483.5,
+        "fmax_mhz": 2500.0,
+        "areas": [],
+        "d_rcv": "12/23/24"
+      },
+      {
+        "ntc": "124520255",
+        "crc": "124520255",
+        "satellite": "NEASTAR-1",
+        "adm": "D",
+        "type": "GSO",
+        "position": "105.0\u00b0E",
+        "provisions": {},
+        "reach": 0,
+        "bands": [
+          "L"
+        ],
+        "freq_span": "1.467 GHz to 1.492 GHz",
+        "fmin_mhz": 1467.0,
+        "fmax_mhz": 1492.0,
+        "areas": [],
+        "d_rcv": "12/24/24"
+      },
+      {
+        "ntc": "124520263",
+        "crc": "124520263",
+        "satellite": "IATON",
+        "adm": "POR",
+        "type": "NGSO",
+        "position": "",
+        "provisions": {},
+        "reach": 0,
+        "bands": [
+          "VHF"
+        ],
+        "freq_span": "157.2 MHz to 161.9 MHz",
+        "fmin_mhz": 157.1875,
+        "fmax_mhz": 161.9375,
+        "areas": [],
+        "d_rcv": "12/31/24"
+      },
+      {
+        "ntc": "125520001",
+        "crc": "125520001",
+        "satellite": "IRIDE-SAR-NIMBUS",
+        "adm": "I",
+        "type": "NGSO",
+        "position": "",
+        "provisions": {},
+        "reach": 0,
+        "bands": [
+          "X"
+        ],
+        "freq_span": "9.9 GHz to 10.3 GHz",
+        "fmin_mhz": 9900.0,
+        "fmax_mhz": 10300.0,
+        "areas": [],
+        "d_rcv": "01/16/25"
+      }
+    ],
+    "fleets": [
+      {
+        "adm": "G",
+        "family": "INMARSAT",
+        "count": 7,
+        "sats": [
+          "INMARSAT-8-117E5",
+          "INMARSAT-8-123W1-R",
+          "INMARSAT-8-28W",
+          "INMARSAT-8-64E",
+          "INMARSAT-8A-160E",
+          "INMARSAT-8A-70W",
+          "INMARSAT-8A-79W"
+        ]
+      },
+      {
+        "adm": "OMA",
+        "family": "OMANSAT",
+        "count": 2,
+        "sats": [
+          "OMANSAT-54.5E-1",
+          "OMANSAT-72E-1"
+        ]
+      }
+    ]
+  }
+}

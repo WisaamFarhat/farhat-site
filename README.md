@@ -25,6 +25,19 @@ The subscribe form posts to Buttondown. Set your username in `generate.py`
 (`BUTTONDOWN_USER`) and regenerate, or edit the form action in the HTML.
 Create a free account at buttondown.email, then paste each biweekly digest as an issue.
 
+## Fetching IFICs straight from the ITU (your machine)
+`_generator/fetch_ifics.py` downloads official IFIC zips from itu.int and feeds the
+pipeline. Requires Python 3 and mdb-tools (`apt install mdbtools` or `brew install
+mdbtools`). Examples:
+
+    python3 fetch_ifics.py --year-to-date     # every 2026 issue published so far
+    python3 fetch_ifics.py 3075               # one issue
+    python3 fetch_ifics.py --inspect 3068     # check the database schema only
+
+Comments format databases are extracted automatically into ific_data.json; if the
+official zip carries a different schema, the script prints the table list so the
+extractor can be adapted once. Then run generate.py as usual.
+
 ## Publishing a new IFIC (minimal touch)
 The site is designed so a new circular changes as little as possible. Every page that
 mentions "the latest issue" (homepage latest section, hero button, the subscribe
