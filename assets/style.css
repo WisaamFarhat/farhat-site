@@ -157,3 +157,70 @@ footer .colophon{grid-column:1/-1;border-top:1px solid #2A2418;padding-top:22px;
   .doc-hero{padding:48px 0 42px}
   .hero{padding:72px 0 60px}
 }
+
+/* ============ comprehensive mobile pass ============ */
+@media(max-width:680px){
+  .wrap{padding:0 20px}
+
+  /* hero: centered composition, calmer type */
+  .hero{padding:64px 0 56px;text-align:center}
+  .hero .eyebrow{justify-content:center}
+  .hero h1{font-size:clamp(2rem,8.4vw,2.9rem);line-height:1.1;letter-spacing:-.015em;margin-left:auto;margin-right:auto}
+  .hero .lede{font-size:1rem;line-height:1.6;margin-left:auto;margin-right:auto}
+  .hero .cta-row{flex-direction:column;align-items:stretch;gap:10px}
+  .hero .cta-row .btn{text-align:center}
+
+  /* doc heroes (ific pages, archive, schedule, services) */
+  .doc-hero{padding:44px 0 40px;text-align:center}
+  .doc-hero h1{font-size:clamp(1.9rem,9vw,2.6rem)}
+  .doc-hero .kicker{font-size:.7rem}
+  .doc-hero p{margin-left:auto;margin-right:auto}
+  .deadline-chip{justify-content:center;font-size:.78rem;padding:8px 14px;max-width:100%}
+
+  /* sections: calmer scale, more air */
+  .section{padding:52px 0}
+  .section h2{font-size:clamp(1.45rem,6.4vw,1.9rem)}
+  .section .sub{font-size:.96rem}
+  .summary{font-size:1.04rem;line-height:1.65}
+  .section-label{font-size:.68rem}
+
+  /* stat band: tighter, centered footnote */
+  .stat-band .s{padding:16px 10px}
+  .stat-band .s b{font-size:1.65rem}
+  .stat-band .s span{font-size:.62rem}
+  .stat-band + div{text-align:center;margin-top:-24px!important}
+
+  /* value grid + services cells */
+  .cell{padding:26px 22px}
+  .grid-3,.grid-2{margin-top:32px}
+
+  /* archive issues */
+  .issue{grid-template-columns:auto 1fr;gap:16px;padding:20px 4px}
+  .issue .num{font-size:1.7rem}
+  .issue .meta h3{font-size:1.02rem;line-height:1.35}
+  .issue .meta p{font-size:.82rem}
+
+  /* subscribe: centered, stacked, contained */
+  .subscribe{padding:30px 20px;text-align:center}
+  .subscribe h2{font-size:1.5rem;margin-left:auto;margin-right:auto}
+  .subscribe p{margin-left:auto;margin-right:auto;font-size:.95rem}
+  .sub-form{margin-left:auto;margin-right:auto}
+  .sub-note{letter-spacing:.14em}
+  .subscribe [style*="justify-content:space-between"]{text-align:left}
+  .subscribe .mono,.subscribe [style*="line-height:2.05"]{text-align:left}
+
+  /* service CTA strip */
+  .svc-cta{flex-direction:column;text-align:center;gap:16px;padding:24px 20px}
+
+  /* fleets */
+  .fleet{padding:14px 16px}
+  .fleet .sats{font-size:.72rem}
+
+  /* footer */
+  footer{padding:44px 0 32px}
+  footer .colophon{flex-direction:column;gap:6px}
+}
+@media(max-width:400px){
+  .hero h1{font-size:clamp(1.85rem,9vw,2.4rem)}
+  .stat-band{grid-template-columns:repeat(2,1fr)}
+}
