@@ -7,8 +7,12 @@
   const ctx = canvas.getContext('2d');
   let W,H,DPR,geom;
 
-  const filings = (window.ORBIT_FILINGS||[]).filter(f=>typeof f.deg==='number');
-  const gso = filings.filter(f=>f.type==='GSO');
+  let gso = [];
+  function setFilings(arr){
+    gso = (arr||[]).filter(f=>f.type==='GSO' && typeof f.deg==='number');
+  }
+  setFilings(window.ORBIT_FILINGS);
+  window.__setOrbitFilings = setFilings;
 
   // starfield
   const stars = Array.from({length:150},()=>({

@@ -224,3 +224,44 @@ footer .colophon{grid-column:1/-1;border-top:1px solid #2A2418;padding-top:22px;
   .hero h1{font-size:clamp(1.85rem,9vw,2.4rem)}
   .stat-band{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ============ mobile refinement: card tables + smaller type ============ */
+@media(max-width:680px){
+  /* filings table becomes stacked cards; no sideways scrolling */
+  .stackable{display:block;border-collapse:separate}
+  .stackable thead{display:none}
+  .stackable tbody{display:block}
+  .stackable tbody tr{display:flex;flex-direction:column;background:var(--white);border:1px solid var(--line);border-radius:5px;padding:12px 14px;margin-bottom:10px}
+  .stackable tbody tr:hover{background:var(--white)}
+  .stackable td{display:flex;justify-content:space-between;align-items:baseline;gap:14px;border:none;padding:3px 0;font-size:.82rem;text-align:right}
+  .stackable td::before{content:attr(data-label);font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);flex:none;text-align:left}
+  .stackable td.sat{order:-1;font-size:1.02rem;text-align:left;justify-content:flex-start;padding-bottom:6px;margin-bottom:4px;border-bottom:1px solid var(--paper-2)}
+  .stackable td.sat::before{display:none}
+  .stackable td[data-label="Frequencies"]{white-space:normal!important}
+
+  /* one notch smaller across the board */
+  .hero h1{font-size:clamp(1.7rem,7.4vw,2.3rem)}
+  .hero .lede{font-size:.94rem}
+  .doc-hero h1{font-size:clamp(1.55rem,8vw,2.1rem)}
+  .doc-hero .kicker{font-size:.62rem}
+  .deadline-chip{font-size:.7rem;padding:7px 12px}
+  .summary{font-size:.97rem;line-height:1.62}
+  .section h2{font-size:clamp(1.28rem,5.6vw,1.55rem)}
+  .section .sub{font-size:.9rem}
+  .section-label{font-size:.64rem}
+  .stat-band .s b{font-size:1.42rem}
+  .stat-band + div{font-size:.62rem}
+  .cell h3{font-size:1.12rem}
+  .cell p{font-size:.87rem}
+  .svc-cta h3{font-size:1.12rem}
+  .svc-cta p{font-size:.87rem}
+  .fleet{font-size:.9rem}
+  .issue .num{font-size:1.5rem}
+  .issue .meta h3{font-size:.95rem}
+  .subscribe h2{font-size:1.28rem}
+  .subscribe p{font-size:.88rem}
+  .nav .wrap{height:62px}
+  .brand .l1,.brand .l2{font-size:.98rem}
+  footer .brand .l1,footer .brand .l2{font-size:1.05rem}
+  footer{font-size:.9rem}
+}

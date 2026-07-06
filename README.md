@@ -25,11 +25,22 @@ The subscribe form posts to Buttondown. Set your username in `generate.py`
 (`BUTTONDOWN_USER`) and regenerate, or edit the form action in the HTML.
 Create a free account at buttondown.email, then paste each biweekly digest as an issue.
 
-## Adding a new IFIC
-1. Run your parser to produce/append the IFIC's entry in `ific_data.json`.
-2. Add its publication date to `PUB_DATES` in `generate.py`.
-3. `python3 generate.py` — regenerates all pages + sitemap.
-4. Review locally (`python3 -m http.server`), then commit & push.
+## Publishing a new IFIC (minimal touch)
+The site is designed so a new circular changes as little as possible. Every page that
+mentions "the latest issue" (homepage latest section, hero button, the subscribe
+preview card, footer link, schedule statuses, prev/next links, live deadline chips)
+is a stable shell filled in the browser from `data/site.json`.
+
+1. Run `extract.py` on the new comments mdb so `ific_data.json` gains the issue.
+2. `python3 generate.py` (2026 dates are already built in; nothing to edit).
+3. Exactly these paths change, and they are all you need to upload:
+   - `ific/<number>/index.html` (the new digest page)
+   - `og/og-<number>.png` (its share card)
+   - `data/site.json` (carries "latest" to every page)
+   - `sitemap.xml` (one added URL)
+   - `ific/index.html` (one added archive row)
+   The homepage, services, schedule, and all earlier IFIC pages stay byte identical.
+4. Review locally (`python3 -m http.server`), commit, push.
 
 ## Paid consultation calls (Calendly + Stripe)
 
