@@ -56,7 +56,7 @@ def subscribe_block(idp="subscribe"):
   <div style="display:flex;gap:44px;align-items:flex-start;flex-wrap:wrap">
     <div style="flex:1;min-width:280px">
       <h2>The brief we build from every IFIC. Get the next one.</h2>
-      <p>Each BR IFIC, read the day it publishes and condensed to the filings, positions, and deadlines that matter.</p>
+      <p class="sub-p">Each BR IFIC, read the day it publishes and condensed to the filings, positions, and deadlines that matter.</p>
       <form class="sub-form" action="https://buttondown.email/api/emails/embed-subscribe/{BUTTONDOWN_USER}" method="post" target="_blank">
         <input type="email" name="email" placeholder="you@company.com" required>
         <button type="submit">Subscribe</button>
@@ -65,7 +65,7 @@ def subscribe_block(idp="subscribe"):
     </div>
     <div style="flex:1;min-width:280px;background:#1C1810;border:1px solid #3A3226;border-radius:3px;padding:22px 24px">
       <div style="display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sand);margin-bottom:14px"><span>From the latest brief</span><span style="color:#8A7A60" data-l-pv-issue>LATEST</span></div>
-      <div style="font-family:var(--mono);font-size:.8rem;line-height:2.05;color:#D8CDBB">
+      <div class="pv-lines" style="font-family:var(--mono);font-size:.8rem;line-height:2.05;color:#D8CDBB">
         <div data-l-pv-stats>Every circular condensed to one page</div>
         <div data-l-pv-lead>The filings with the broadest reach, named and placed</div>
         <div data-l-pv-fleet>Fleets and clusters flagged</div>
@@ -98,7 +98,7 @@ def head(title, desc, path, og_extra="", og_image="/og/og-default.png"):
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=10">{og_extra}
+<link rel="stylesheet" href="/assets/style.css?v=11">{og_extra}
 </head><body>{NAV}'''
 
 # ---------------- IFIC detail page: modular sections ----------------
@@ -388,7 +388,7 @@ def homepage():
   <div class="wrap">
     <div class="eyebrow reveal" style="display:flex;align-items:center;gap:16px"><span style="display:inline-block;width:42px;height:1px;background:var(--sand)"></span>ITU BR IFIC Intelligence</div>
     <h1 class="reveal">We parse every IFIC and pinpoint what matters to your constellation.</h1>
-    <p class="lede reveal">The BR publishes a new International Frequency Information Circular every two weeks. Each one holds hundreds of coordination requests in a raw database almost no one reads. We turn every circular into intelligence, and prepare the comment filings <span style="color:var(--sand-lt);font-weight:600">that keep your priority intact</span>.</p>
+    <p class="lede reveal"><span class="lede-full">The BR publishes a new International Frequency Information Circular every two weeks. Each one holds hundreds of coordination requests in a raw database almost no one reads. We turn every circular into intelligence, and prepare the comment filings <span style="color:var(--sand-lt);font-weight:600">that keep your priority intact</span>.</span><span class="lede-short">Hundreds of coordination requests land every two weeks. We decode them and prepare the comments <span style="color:var(--sand-lt);font-weight:600">that keep your priority intact</span>.</span></p>
     <div class="cta-row reveal">
       <a href="/ific/" class="btn btn-sand" data-l-cta>Read the latest circular →</a>
       <a href="#subscribe" class="btn btn-ghost">Get the free digest</a>

@@ -265,3 +265,33 @@ footer .colophon{grid-column:1/-1;border-top:1px solid #2A2418;padding-top:22px;
   footer .brand .l1,footer .brand .l2{font-size:1.05rem}
   footer{font-size:.9rem}
 }
+
+/* ============ mobile content diet ============ */
+.lede-short{display:none}
+@media(max-width:680px){
+  /* hero: short lede, smaller headline, less padding */
+  .lede-full{display:none}
+  .lede-short{display:inline}
+  .hero{padding:52px 0 44px}
+  .hero h1{font-size:clamp(1.5rem,6.8vw,1.95rem);line-height:1.14}
+  .hero .lede{font-size:.92rem;line-height:1.55;max-width:34ch}
+  .hero .eyebrow{font-size:.6rem;margin-bottom:16px}
+  .hero .cta-row{margin-top:26px}
+  .btn{padding:11px 20px;font-size:.88rem}
+
+  /* subscribe: headline + form + note + a two line data card, nothing more */
+  .subscribe{padding:26px 18px}
+  .subscribe h2{font-size:1.18rem;line-height:1.3}
+  .subscribe .sub-p{display:none}
+  .sub-form{margin-top:16px}
+  .sub-form input,.sub-form button{padding:11px 14px;font-size:.9rem}
+  .sub-note{font-size:.56rem;letter-spacing:.12em;margin-top:10px}
+  .subscribe [data-l-pv-lead],.subscribe [data-l-pv-fleet]{display:none}
+  .pv-lines{line-height:1.7!important;font-size:.72rem!important}
+  .subscribe [style*="min-width:280px"]{min-width:240px}
+  .subscribe .reveal{}
+
+  /* doc-hero summary and general density */
+  .summary{font-size:.93rem;line-height:1.58}
+  .section{padding:44px 0}
+}
