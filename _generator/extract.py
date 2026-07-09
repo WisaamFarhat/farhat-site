@@ -54,9 +54,11 @@ def rows(mdb, table):
 
 def col(h, name): return h.index(name) if name in h else -1
 
-BANDS = [("VHF",30,300),("UHF",300,1000),("L",1000,2000),("S",2000,4000),
-         ("C",4000,8000),("X",8000,12000),("Ku",12000,17300),("Ka",17300,31000),
-         ("Q/V",33000,76000)]
+# IEEE standard radar-frequency band designations (ranges in MHz)
+BANDS = [("HF",3,30),("VHF",30,300),("UHF",300,1000),("L",1000,2000),
+         ("S",2000,4000),("C",4000,8000),("X",8000,12000),("Ku",12000,18000),
+         ("K",18000,27000),("Ka",27000,40000),("V",40000,75000),
+         ("W",75000,110000),("mm",110000,300000)]
 def band_letters(ranges):
     out=[]
     for name,lo,hi in BANDS:

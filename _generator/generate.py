@@ -105,7 +105,7 @@ def head(title, desc, path, og_extra="", og_image="/og/og-default.png"):
 # Each section is a function (num, d, ctx) -> HTML string (or "" to skip).
 # To add a new section: write a function below and add it to IFIC_SECTIONS.
 
-BAND_ORDER = ["VHF","UHF","L","S","C","X","Ku","Ka","Q/V"]
+BAND_ORDER = ["HF","VHF","UHF","L","S","C","X","Ku","K","Ka","V","W","mm"]
 
 def _fmt_mhz(v):
     if v is None: return ""
