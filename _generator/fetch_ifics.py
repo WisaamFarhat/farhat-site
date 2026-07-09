@@ -22,6 +22,8 @@ from datetime import datetime
 ZIP_BASE = os.environ.get("ITU_ZIP_BASE", "https://www.itu.int/sns/ific10/ific{}.zip")
 HERE = os.path.dirname(os.path.abspath(__file__))
 CACHE = os.path.join(HERE, "_ific_cache")
+print(f"Downloads cache: {CACHE}")
+print(f"Data file:       {os.path.join(HERE, 'ific_data.json')}")
 NEEDED = {"com_el", "all_aff_ntw", "grp", "grp_aff_rec", "pub_ssn"}
 
 # 2026 schedule (official)
@@ -37,10 +39,17 @@ PUB = {"3062":"2026-01-06","3063":"2026-01-20","3064":"2026-02-03","3065":"2026-
  "3086":"2026-12-08"}
 
 def mdb_tables(path):
-    r = subprocess.run(["mdb-tables","-1",path], capture_output=True, text=True)
-    if r.returncode != 0:
-        sys.exit("mdb-tools is required (apt install mdbtools / brew install mdbtools)")
-    return {t for t in r.stdout.split("\n") if t}
+    if shutil.which("mdb-tables"):
+        r = subprocess.run(["mdb-tables","-1",path], capture_output=True, text=True)
+        if r.returncode == 0:
+            return {t for t in r.stdout.split("\n") if t}
+    # Windows: use the Microsoft Access ODBC driver through pyodbc
+    import extract as EX
+    cn = EX._access_connect(path)
+    cur = cn.cursor()
+    tabs = {row.table_name for row in cur.tables(tableType="TABLE")}
+    cur.close()
+    return tabs
 
 def download(num):
     os.makedirs(CACHE, exist_ok=True)

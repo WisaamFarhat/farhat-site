@@ -27,8 +27,13 @@ Create a free account at buttondown.email, then paste each biweekly digest as an
 
 ## Fetching IFICs straight from the ITU (your machine)
 `_generator/fetch_ifics.py` downloads official IFIC zips from itu.int and feeds the
-pipeline. Requires Python 3 and mdb-tools (`apt install mdbtools` or `brew install
-mdbtools`). Examples:
+pipeline. Requires Python 3 plus one way to read Access databases:
+  * Linux/Mac: mdb-tools (`apt install mdbtools` / `brew install mdbtools`)
+  * Windows: `pip install pyodbc` plus the Microsoft Access Database Engine
+    redistributable matching your Python bitness (64 bit for 64 bit Python):
+    https://www.microsoft.com/en-us/download/details.aspx?id=54920
+    (or simply run the script inside WSL with mdbtools)
+Examples:
 
     python3 fetch_ifics.py --year-to-date     # every 2026 issue published so far
     python3 fetch_ifics.py 3075               # one issue
