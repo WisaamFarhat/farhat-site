@@ -1,6 +1,7 @@
 import json, os, html, re
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+import quarterly
 
 DATA = json.load(open(os.path.join(os.path.dirname(__file__),'ific_data.json')))
 DOMAIN = "https://farhatregulatory.com"
@@ -44,7 +45,7 @@ def FOOTER():
   <div><div class="brand"><span class="l1" style="display:block;line-height:.96">Farhat</span><span class="l2" style="display:block;line-height:.96;color:var(--sand)">Regulatory</span></div>
     <p style="max-width:34ch;font-size:.9rem">Independent ITU satellite-spectrum intelligence. We decode every BR IFIC and prepare the comment filings that keep your networks protected.</p></div>
   <div><h4>The Digest</h4>
-    <a href="/ific/">All issues</a><a href="/ific/quarterly/">Quarterly reviews</a><a href="/ific/schedule/">2026 schedule</a><a href="/ific/" data-l-foot>Latest issue</a></div>
+    <a href="/ific/">All issues</a><a href="/ific/quarterly/">Quarterly summaries</a><a href="/ific/schedule/">2026 schedule</a><a href="/ific/" data-l-foot>Latest issue</a></div>
   <div><h4>Reference</h4>
     <a href="/guides/">Guides</a><a href="/services/">Coordination service</a><a href="#subscribe">Newsletter</a></div>
   <div class="colophon"><span>© {datetime.now().year} Farhat Regulatory</span><span>Data extracted from ITU BR IFIC publications</span></div>
@@ -306,242 +307,6 @@ def ific_page(num):
 </body></html>'''
     return head(title,desc,f"/ific/{num}/",og,og_image=f"/og/og-{num}.png")+body
 
-# ---------------- quarterly summaries ----------------
-# Aggregated from ific_data.json so figures stay consistent with the digest pages.
-# To add a quarter: add an entry to QUARTERS with its IFIC numbers. Pages regenerate
-# automatically. A circular belongs to the quarter of its publication (WIC) date, so
-# IFIC 3062 (6 Jan 2026) opens Q1 and IFIC 3075 (7 Jul 2026) opens Q3.
-QUARTERS = {
-    "2026-q1": {"label":"First Quarter 2026", "short":"Q1 2026", "year":2026, "q":1,
-                "ifics":["3062","3063","3064","3065","3066","3067","3068"]},
-    "2026-q2": {"label":"Second Quarter 2026", "short":"Q2 2026", "year":2026, "q":2,
-                "ifics":["3069","3070","3071","3072","3073","3074"]},
-}
-
-# Clean table-form administration names (adm_name carries articled prose forms).
-ADM_TABLE = {
- "G":"United Kingdom","F":"France","D":"Germany","I":"Italy","E":"Spain","S":"Sweden",
- "USA":"United States","CHN":"China","RUS":"Russia","J":"Japan","KOR":"Rep. of Korea",
- "IND":"India","LUX":"Luxembourg","NOR":"Norway","QAT":"Qatar","UAE":"United Arab Emirates",
- "SAU":"Saudi Arabia","ARS":"Saudi Arabia","CAN":"Canada","AUS":"Australia","HOL":"Netherlands",
- "SUI":"Switzerland","CYP":"Cyprus","AZE":"Azerbaijan","OMA":"Oman","EGY":"Egypt","POR":"Portugal",
-}
-def adm_table_name(code): return ADM_TABLE.get(code, adm_name(code))
-
-import statistics as _stats
-
-def quarter_data(key):
-    """Aggregate a quarter from the per-IFIC DATA, keeping figures site-consistent."""
-    cfg = QUARTERS[key]
-    ifics = [n for n in cfg["ifics"] if n in DATA]
-    tot = gso = ngso = pairings = 0
-    adm_counts = {}
-    fleets = []
-    reaches = []
-    lead_filings = []
-    per_ific = []
-    prov_all = {}
-    for n in ifics:
-        d = DATA[n]
-        tot += d["total_filings"]; gso += d["gso"]; ngso += d["ngso"]
-        pairings += sum(d["provmix"].values())
-        for k,v in d["provmix"].items(): prov_all[k] = prov_all.get(k,0)+v
-        for a,c in d.get("top_adms", []): adm_counts[a] = adm_counts.get(a,0)+c
-        for fl in d.get("fleets", []):
-            fleets.append({**fl, "ific":n})
-        for f in d["filings"]:
-            if f.get("reach"): reaches.append(f["reach"])
-            lead_filings.append({**f, "ific":n})
-        pub = PUB_DATES.get(n)
-        per_ific.append({"n":n, "pub":pub, "pubfmt":fmt_date(pub) if pub else "",
-                         "filings":d["total_filings"], "gso":d["gso"], "ngso":d["ngso"]})
-    top_adms = sorted(adm_counts.items(), key=lambda kv:(-kv[1], kv[0]))
-    fleets.sort(key=lambda fl:-fl["count"])
-    lead_filings.sort(key=lambda f:-(f.get("reach") or 0))
-    med = int(_stats.median(reaches)) if reaches else 0
-    pubs = [datetime.strptime(p["pub"],"%d.%m.%Y") for p in per_ific if p["pub"]]
-    start = min(pubs) if pubs else None
-    end = max(pubs) if pubs else None
-    return {"cfg":cfg, "ifics":ifics, "tot":tot, "gso":gso, "ngso":ngso,
-            "pairings":pairings, "top_adms":top_adms, "fleets":fleets,
-            "lead_filings":lead_filings, "median_reach":med, "per_ific":per_ific,
-            "prov_all":prov_all, "start":start, "end":end,
-            "n_adms":len(adm_counts), "reach_filings":len(reaches)}
-
-def _quarter_prov_line(q):
-    top = sorted(q["prov_all"].items(), key=lambda kv:-kv[1])[:4]
-    return ", ".join(f"{k} ({v:,})" for k,v in top)
-
-def quarter_page(key):
-    q = quarter_data(key); cfg = q["cfg"]
-    lead = q["top_adms"][0] if q["top_adms"] else ("",0)
-    span = ""
-    if q["start"] and q["end"]:
-        span = f'{q["start"].strftime("%-d %B")} to {q["end"].strftime("%-d %B %Y")}'
-    ifrange = f'IFIC {q["ifics"][0]} to {q["ifics"][-1]}'
-
-    # per-circular table
-    irows = ""
-    for i, p in enumerate(q["per_ific"]):
-        irows += f'''<tr>
-          <td class="crc" style="font-weight:600;color:var(--ink)"><a href="/ific/{p['n']}/" style="color:var(--sand)">IFIC {p['n']}</a></td>
-          <td class="mono">{p['pubfmt']}</td>
-          <td class="mono">{p['gso']} / {p['ngso']}</td>
-          <td class="mono" style="text-align:right">{p['filings']}</td>
-        </tr>'''
-
-    # administrations chips
-    chips = " ".join(
-        f'<span style="display:inline-block;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:4px 14px;font-size:.85rem;margin:0 6px 8px 0">{esc(adm_table_name(a))} <b class="mono" style="font-size:.78rem">{n}</b></span>'
-        for a, n in q["top_adms"][:12])
-
-    # highest-reach filings
-    brows = ""
-    for f in q["lead_filings"][:8]:
-        pos = f["position"] or ('<span style="color:var(--muted)">NGSO</span>' if f["type"]=="NGSO" else "n/a")
-        brows += f'''<tr>
-          <td class="sat" data-label="Satellite">{esc(f['satellite'])}</td>
-          <td data-label="Administration">{esc(adm_table_name(f['adm']))}</td>
-          <td data-label="Type"><span class="tag {f['type'].lower()}">{f['type']}</span></td>
-          <td class="mono" data-label="Position">{pos}</td>
-          <td data-label="IFIC"><a href="/ific/{f['ific']}/" style="color:var(--sand)">{f['ific']}</a></td>
-          <td class="mono" data-label="Networks reached" style="text-align:right">{(f.get('reach') or 0):,}</td>
-        </tr>'''
-
-    # fleets
-    fleet_html = ""
-    if q["fleets"]:
-        items = ""
-        for fl in q["fleets"][:6]:
-            sats = ", ".join(fl["sats"][:8]) + ("\u2026" if len(fl["sats"])>8 else "")
-            items += f'<div class="fleet reveal"><b>{esc(adm_table_name(fl["adm"]))}</b> filed a cluster of <b>{fl["count"]}</b> networks in the {esc(fl["family"])} family <span class="mono" style="color:var(--muted);font-size:.78rem">(IFIC {fl["ific"]})</span><div class="sats">{esc(sats)}</div></div>'
-        fleet_html = f'<div class="section" style="padding-top:0"><div class="section-label">Fleets &amp; clusters this quarter</div>{items}</div>'
-
-    prov_line = _quarter_prov_line(q)
-    summary = (f"Across {cfg['short']}, the Bureau published {len(q['ifics'])} space services circulars "
-               f"carrying {q['tot']} coordination requests, {q['gso']} GSO and {q['ngso']} NGSO. "
-               f"{adm_table_name(lead[0])} was the single largest source with {lead[1]} filings. "
-               f"Coordination was invoked most often under {prov_line or 'multiple provisions'}. "
-               f"The {q['pairings']:,} coordination pairings are dominated by a handful of large NGSO "
-               f"constellation filings, so the typical filing reached a median of {q['median_reach']:,} "
-               f"existing networks.")
-
-    title = f"BR IFIC {cfg['short']} Summary: {q['tot']} Coordination Filings | Farhat Regulatory"
-    desc = (f"{cfg['short']} in review: {q['tot']} CR/C coordination requests across {len(q['ifics'])} "
-            f"BR IFIC circulars ({q['gso']} GSO, {q['ngso']} NGSO). Led by {adm_table_name(lead[0])}. "
-            f"Every filing decoded by Farhat Regulatory.")
-
-    # neighbour links
-    qkeys = list(QUARTERS.keys())
-    idx = qkeys.index(key)
-    prev_k = qkeys[idx-1] if idx>0 else None
-    next_k = qkeys[idx+1] if idx < len(qkeys)-1 else None
-    nav_prev = f'<a href="/ific/quarterly/{prev_k}/" style="color:var(--sand)">&#8592; {QUARTERS[prev_k]["short"]}</a>' if prev_k else '<span></span>'
-    nav_next = f'<a href="/ific/quarterly/{next_k}/" style="color:var(--sand)">{QUARTERS[next_k]["short"]} &#8594;</a>' if next_k else '<span></span>'
-
-    ld = {"@context":"https://schema.org","@type":"Article",
-          "headline":f"BR IFIC {cfg['short']}: {q['tot']} coordination filings",
-          "datePublished":q["end"].strftime("%Y-%m-%d") if q["end"] else "",
-          "author":{"@type":"Organization","name":"Farhat Regulatory"},
-          "publisher":{"@type":"Organization","name":"Farhat Regulatory"},
-          "description":desc}
-    og = f'\n<script type="application/ld+json">{json.dumps(ld)}</script>'
-
-    body = f'''
-<header class="doc-hero">
-  <canvas id="orbit-canvas"></canvas>
-  <div class="wrap">
-    <div class="kicker"><span>Quarterly Review</span>&nbsp;&nbsp;&nbsp;<span>{ifrange}</span></div>
-    <h1>{cfg['label']}</h1>
-    <p style="color:#CBBFA6;max-width:54ch;font-size:1.06rem">{span}. The quarter's BR IFIC coordination activity, aggregated across every circular.</p>
-  </div>
-</header>
-<div class="wrap">
-  <div class="section" style="padding-bottom:24px">
-    <p class="summary reveal">{summary}</p>
-  </div>
-  <div class="stat-band reveal">
-    <div class="s"><b>{q['tot']}</b><span>Filings</span></div>
-    <div class="s"><b>{q['gso']}</b><span>GSO</span></div>
-    <div class="s"><b>{q['ngso']}</b><span>NGSO</span></div>
-    <div class="s"><b>{len(q['ifics'])}</b><span>Circulars</span></div>
-  </div>
-  <div style="font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-top:-28px;margin-bottom:32px">Figures aggregate every space services circular published in the quarter, keyed to each circular's publication date.</div>
-
-  <div class="section" style="padding-top:8px">
-    <div class="section-label">Filing volume by circular</div>
-    <h2 style="font-size:1.6rem">The {len(q['ifics'])} circulars</h2>
-    <div style="overflow-x:auto">
-    <table class="ftable">
-      <thead><tr><th>Circular</th><th>Published</th><th>GSO / NGSO</th><th style="text-align:right">Filings</th></tr></thead>
-      <tbody>{irows}</tbody>
-    </table></div>
-  </div>
-
-  <div class="section" style="padding-top:0;padding-bottom:26px">
-    <div class="section-label reveal">Who filed</div>
-    <h2 style="font-size:1.6rem" class="reveal">Leading administrations</h2>
-    <div class="reveal" style="margin-top:18px">{chips}</div>
-  </div>
-
-  <div class="section" style="padding-top:0">
-    <div class="section-label">Coordination pressure</div>
-    <h2 style="font-size:1.6rem">Highest-reach filings</h2>
-    <p class="sub reveal" style="margin-top:10px;font-size:.94rem">Ranked by the number of existing networks each filing flags as potentially affected. Reach is concentrated: the median filing reached {q['median_reach']:,} networks, while the largest reached into the hundreds of thousands.</p>
-    <div style="overflow-x:auto;margin-top:18px">
-    <table class="ftable stackable">
-      <thead><tr><th>Satellite</th><th>Adm.</th><th>Type</th><th>Position</th><th>IFIC</th><th style="text-align:right">Networks reached</th></tr></thead>
-      <tbody>{brows}</tbody>
-    </table></div>
-  </div>
-
-  {fleet_html}
-
-  <div style="display:flex;justify-content:space-between;margin-top:40px;font-family:var(--mono);font-size:.85rem">
-    {nav_prev}{nav_next}
-  </div>
-
-  {subscribe_block("subscribe")}
-</div>
-{FOOTER()}
-<script>window.ORBIT_FILINGS=[];</script>
-<script src="/assets/orbit.js?v=3"></script>
-</body></html>'''
-    return head(title, desc, f"/ific/quarterly/{key}/", og) + body
-
-def quarterly_index():
-    title = "BR IFIC Quarterly Reviews | ITU Coordination Activity by Quarter | Farhat Regulatory"
-    desc = "Quarterly reviews of BR IFIC satellite coordination activity: filing volumes, leading administrations, and the highest-reach networks, aggregated from every circular."
-    cards = ""
-    for key in QUARTERS:
-        q = quarter_data(key); cfg = q["cfg"]
-        lead = q["top_adms"][0] if q["top_adms"] else ("",0)
-        span = ""
-        if q["start"] and q["end"]:
-            span = f'{q["start"].strftime("%-d %b")} to {q["end"].strftime("%-d %b %Y")}'
-        cards += f'''<a href="/ific/quarterly/{key}/" class="issue reveal">
-          <div class="num">{cfg['short'].split()[0]}<small>{cfg['year']}</small></div>
-          <div class="meta"><h3>{q['tot']} coordination filings&nbsp;&nbsp;&nbsp;<span style="color:var(--muted);font-weight:400">led by {esc(adm_table_name(lead[0]))}</span></h3>
-            <p>{span}<span style="display:inline-block;width:1px;height:.75em;background:var(--line);margin:0 12px;vertical-align:middle"></span>{q['gso']} GSO / {q['ngso']} NGSO<span style="display:inline-block;width:1px;height:.75em;background:var(--line);margin:0 12px;vertical-align:middle"></span>{len(q['ifics'])} circulars</p></div>
-          <div class="stat"><b>{q['pairings']:,}</b>coordination<br>pairings</div>
-        </a>'''
-    body = f'''
-<header class="doc-hero"><canvas id="orbit-canvas"></canvas><div class="wrap">
-  <div class="kicker">Quarterly Review</div>
-  <h1>IFIC by the quarter</h1>
-  <p style="color:#CBBFA6;max-width:52ch;font-size:1.1rem">Every BR IFIC circular, aggregated into a quarterly picture: how much was filed, by whom, and which networks carried the broadest coordination reach.</p>
-  <p style="margin-top:14px"><a href="/ific/" class="mono" style="font-size:.78rem;letter-spacing:.1em;color:var(--sand)">BROWSE INDIVIDUAL ISSUES &#8594;</a></p>
-</div></header>
-<div class="wrap"><div class="section">
-  <div class="issue-list">{cards}</div>
-</div>
-{subscribe_block("subscribe")}
-</div>{FOOTER()}
-<script>window.ORBIT_FILINGS=[];</script>
-<script src="/assets/orbit.js?v=3"></script></body></html>'''
-    return head(title, desc, "/ific/quarterly/") + body
-
-
 # ---------------- archive index ----------------
 def archive_index():
     nums=sorted(DATA.keys(),reverse=True)
@@ -555,6 +320,24 @@ def archive_index():
             <p>{pubfmt}<span style="display:inline-block;width:1px;height:.75em;background:var(--line);margin:0 12px;vertical-align:middle"></span>{d['gso']} GSO / {d['ngso']} NGSO<span style="display:inline-block;width:1px;height:.75em;background:var(--line);margin:0 12px;vertical-align:middle"></span>{len(d['fleets'])} fleet{'s' if len(d['fleets'])!=1 else ''} detected</p></div>
           <div class="stat" title="Each pairing is one existing network flagged against one new filing"><b>{sum(d['provmix'].values())}</b>coordination<br>pairings</div>
         </a>'''
+    # Quarterly entry banner, built from live quarter aggregates
+    qcards=""
+    for qkey in quarterly.QUARTER_ORDER:
+        qd=quarterly.quarter_stats(DATA, PUB_DATES, fmt_date, qkey)
+        qcards+=(f'<a href="/ific/quarterly/{qkey}/" style="flex:1;min-width:180px;display:block;'
+                 f'background:var(--paper-2);border:1px solid var(--line);border-radius:3px;'
+                 f'padding:18px 20px;text-decoration:none">'
+                 f'<div style="font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;'
+                 f'text-transform:uppercase;color:var(--muted)">{esc(qd["short"])}</div>'
+                 f'<div style="font-family:var(--serif);font-size:1.5rem;color:var(--ink);'
+                 f'margin:6px 0 2px">{qd["total"]} filings</div>'
+                 f'<div style="font-size:.86rem;color:var(--muted)">{qd["gso"]} GSO / {qd["ngso"]} NGSO '
+                 f'across {qd["n_issues"]} circulars</div></a>')
+    qbanner=(f'<div class="reveal" style="margin-bottom:44px">'
+             f'<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:16px">'
+             f'<div class="section-label" style="margin:0">The quarter in one view</div>'
+             f'<a href="/ific/quarterly/" class="mono" style="font-size:.74rem;letter-spacing:.1em;color:var(--sand)">ALL QUARTERLY SUMMARIES &#8594;</a></div>'
+             f'<div style="display:flex;gap:16px;flex-wrap:wrap">{qcards}</div></div>')
     title="BR IFIC Digest Archive | Every ITU Coordination Circular Decoded | Farhat Regulatory"
     desc="Browse every BR IFIC: coordination filings, satellites, orbital positions, and comment deadlines, decoded issue by issue by Farhat Regulatory."
     body=f'''
@@ -562,9 +345,10 @@ def archive_index():
   <div class="kicker">The Archive</div>
   <h1>The IFIC Digest</h1>
   <p style="color:#CBBFA6;max-width:52ch;font-size:1.1rem">Every ITU BR International Frequency Information Circular, parsed and decoded: the filings, the players, the deadlines.</p>
-  <p style="margin-top:14px"><a href="/ific/schedule/" class="mono" style="font-size:.78rem;letter-spacing:.1em;color:var(--sand)">FULL 2026 SCHEDULE &#8594;</a></p>
+  <p style="margin-top:14px"><a href="/ific/quarterly/" class="mono" style="font-size:.78rem;letter-spacing:.1em;color:var(--sand)">QUARTERLY SUMMARIES &#8594;</a><span style="display:inline-block;width:1px;height:.75em;background:var(--line);margin:0 16px;vertical-align:middle"></span><a href="/ific/schedule/" class="mono" style="font-size:.78rem;letter-spacing:.1em;color:var(--sand)">FULL 2026 SCHEDULE &#8594;</a></p>
 </div></header>
 <div class="wrap"><div class="section">
+  {qbanner}
   <div class="issue-list">{items}</div>
 </div>
 {subscribe_block("subscribe")}
@@ -649,6 +433,13 @@ def homepage():
     <h2 class="reveal" data-l-heading>The newest circular, decoded</h2>
     <p class="sub reveal" data-l-summary>Every two weeks we parse the newest BR IFIC into a plain language brief: who filed, which satellites and orbital slots, the fleets moving together, and the comment deadline it opens.</p>
     <a href="/ific/" class="btn btn-sand reveal" style="margin-top:24px" data-l-open>Open the latest issue →</a>
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="section-label reveal">The bigger picture</div>
+    <h2 class="reveal">Zoom out: a quarter at a time</h2>
+    <p class="sub reveal">Beyond each circular, we roll the whole quarter into one view: total coordination volume, the administrations filing most, and the networks carrying the broadest coordination reach. The fastest way to see where the pressure is building.</p>
+    <a href="/ific/quarterly/" class="btn btn-sand reveal" style="margin-top:24px">See the quarterly summaries →</a>
   </div>
 
   {subscribe_block("subscribe")}
@@ -860,12 +651,6 @@ site={"issues":[_issue_entry(n) for n in sorted(DATA.keys(),reverse=True)]}
 open("data/site.json","w").write(json.dumps(site))
 print("data/site.json written with", len(site["issues"]), "issues")
 open("ific/schedule/index.html","w").write(schedule_page())
-os.makedirs("ific/quarterly",exist_ok=True)
-open("ific/quarterly/index.html","w").write(quarterly_index())
-for _qkey in QUARTERS:
-    os.makedirs(f"ific/quarterly/{_qkey}",exist_ok=True)
-    open(f"ific/quarterly/{_qkey}/index.html","w").write(quarter_page(_qkey))
-print("quarterly pages written:", ", ".join(QUARTERS.keys()))
 open("index.html","w").write(homepage())
 open("services/index.html","w").write(services_page())
 open("ific/index.html","w").write(archive_index())
@@ -873,8 +658,18 @@ for num in DATA:
     os.makedirs(f"ific/{num}",exist_ok=True)
     open(f"ific/{num}/index.html","w").write(ific_page(num))
 
+# quarterly summaries
+os.makedirs("ific/quarterly",exist_ok=True)
+open("ific/quarterly/index.html","w").write(
+    quarterly.quarterly_index(head, NAV, FOOTER, subscribe_block, DATA, PUB_DATES, fmt_date))
+for qkey in quarterly.QUARTERS:
+    os.makedirs(f"ific/quarterly/{qkey}",exist_ok=True)
+    open(f"ific/quarterly/{qkey}/index.html","w").write(
+        quarterly.quarter_page(head, NAV, FOOTER, subscribe_block, DATA, PUB_DATES, fmt_date, qkey))
+print("quarterly summaries written:", ", ".join(quarterly.QUARTERS.keys()))
+
 # sitemap + robots + CNAME
-urls=[("/",1.0),("/ific/",0.9),("/services/",0.9),("/ific/schedule/",0.85),("/ific/quarterly/",0.85)]+[(f"/ific/quarterly/{q}/",0.8) for q in QUARTERS]+[(f"/ific/{n}/",0.8) for n in sorted(DATA,reverse=True)]
+urls=[("/",1.0),("/ific/",0.9),("/services/",0.9),("/ific/schedule/",0.85),("/ific/quarterly/",0.85)]+[(f"/ific/quarterly/{q}/",0.8) for q in quarterly.QUARTER_ORDER]+[(f"/ific/{n}/",0.8) for n in sorted(DATA,reverse=True)]
 sm='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u,p in urls:
     sm+=f'  <url><loc>{DOMAIN}{u}</loc><changefreq>weekly</changefreq><priority>{p}</priority></url>\n'
